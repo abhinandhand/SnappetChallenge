@@ -1,0 +1,40 @@
+@import '../../../../styles/abstracts/config';
+
+.header {
+    background-color: $color-primary;
+    height: 3.75rem;
+    color: $color-white;
+    text-align: center;
+
+    &__nav {
+        height: inherit;
+    }
+
+    &__nav-container {
+        display: flex;
+        align-items: center;
+        height: inherit;
+    }
+
+    &__items-left, &__items-right{
+        flex: 1;
+    }
+
+    &__items-brand{
+        flex: 0 0 20rem;
+        text-align: center;
+    }
+
+    &__logo-box{
+        height: inherit;
+    }
+
+    &__logo-img {
+        width: 3.125rem;
+        height: inherit;
+    }
+
+    &__logo-title {
+        margin: 0 1rem;
+    }
+}

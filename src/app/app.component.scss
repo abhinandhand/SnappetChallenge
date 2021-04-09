@@ -1,3 +1,17 @@
+.appcontainer{
+  
+  &__content{
+    display: flex;
+  }
+
+  &__content-sidenav{
+    z-index: 20;
+  }
+  &__content-outlet{
+    z-index: 10;
+  }
+}
+
 svg#clouds {
     position: fixed;
     bottom: -160px;

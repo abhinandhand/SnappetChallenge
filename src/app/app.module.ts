@@ -8,6 +8,7 @@ import { environment } from '../environments/environment';
 import { StoreModule } from '@ngrx/store';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
+import { MyClassModule } from './feature/my-class/my-class.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { CoreModule } from './core/core.module';
     StoreModule.forRoot({}, {}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     SharedModule,
+    MyClassModule,
     CoreModule
   ],
   providers: [],

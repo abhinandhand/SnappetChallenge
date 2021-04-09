@@ -1,1 +1,21 @@
-<p>side-nav works!</p>
+<div class="sidenav sidenav__bar"
+    [ngClass]="isCollapse ? 'menu__expanded' : 'menu__collapsed'">
+    <ul class="menu__ul">
+        <li>
+            <div class="menu__item-box" routerLink="/">
+                <div class=""><img class="menu__angle-svg"  src="../../../../assets/svg/teacher.svg" alt=""></div>
+                <div  class=" menu__item-title" [hidden]="!isCollapse">My Class</div>
+            </div>
+        </li>
+        <li>
+            <div class="menu__item-box" routerLink="/class-performance">
+                <div class=""><img class="menu__angle-svg"  src="../../../../assets/svg/speedometer.svg" alt=""></div>
+                <div  class=" menu__item-title" [hidden]="!isCollapse">Performance</div>
+            </div>
+        </li>
+        
+        <li #toggleSidenav class="menu__angle-box">
+            <img class="menu__angle-svg" [ngClass]="isCollapse ? 'menu__angle-left': ''" src="../../../../assets/svg/angle-right.svg" alt="">
+        </li>
+    </ul>
+</div>
