@@ -25,7 +25,6 @@ import { CommonModule } from '@angular/common';
     MyClassModule,
     CoreModule,
     CommonModule,
-    ChartsModule,
     StoreModule.forRoot(reducers, {}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([]),
