@@ -5,9 +5,8 @@ import {
 import { environment } from '../../../environments/environment';
 
 // Global application state defination
-export interface AppState {
-
-}
+// tslint:disable-next-line:no-empty-interface
+export interface AppState {}
 
 export const reducers: ActionReducerMap<AppState> = {
 

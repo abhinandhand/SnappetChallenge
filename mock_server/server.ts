@@ -8,8 +8,8 @@ const fs = require('fs');
 server.use(middlewares);
 server.use(jsonServer.bodyParser);
 
-server.get('/suggestions', (req: any, res: any) => { 
-  const students = returnSuggestions();
+server.get('/suggestions', (req: any, res: any) => {
+  const students = returnSuggestions(req.query.filter);
   if (true) {
     res.send(students);
   } else {
@@ -18,7 +18,7 @@ server.get('/suggestions', (req: any, res: any) => {
 });
 
 
-server.get('/rawData', (req: any, res: any) => { 
+server.get('/rawData', (req: any, res: any) => {
   const rawData = returnRawData();
   if (true) {
     res.send(rawData);
@@ -34,13 +34,19 @@ server.listen(3000, () => {
 });
 
 
-function returnSuggestions() {
-  const dbRaw = fs.readFileSync('./mock_server/data/students.json');
-  const students = JSON.parse(dbRaw);
-  return students;
+
+function returnSuggestions(searchTerm): any {
+  const dbRaw = fs.readFileSync('./mock_server/data/suggestions.json');
+  const students: [] = JSON.parse(dbRaw);
+  if (searchTerm === ''){
+    return [];
+  }
+  const result = students.filter((v: any) => v.term.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+  return result;
 }
 
-function returnRawData() {
+
+function returnRawData(): any {
   const dbRaw = fs.readFileSync('./mock_server/data/rawdataset.json');
   const rawData = JSON.parse(dbRaw);
   return rawData;

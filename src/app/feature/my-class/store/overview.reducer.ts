@@ -4,12 +4,8 @@ import { Overview } from 'src/app/core/model/overview';
 import { OverviewAction } from './overview.actiontype';
 
 export const OverviewFeatureKey = 'overview-raw-data';
-
 export interface OverviewState extends EntityState<Overview> {}
-
-
 export const adapter = createEntityAdapter<Overview>({selectId: Overview => Overview.SubmittedAnswerId});
-
 export const initialOverviewState = adapter.getInitialState();
 
 export const OverviewReducer = createReducer(

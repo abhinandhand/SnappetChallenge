@@ -6,4 +6,21 @@
         padding-left: 0.5rem;
         width: 14rem;
     }
+
+    &__suggestion-box {
+        text-align: left;
+        position: absolute;
+        margin-left: 11.6%;
+        background-color: #fff;
+        color: black;
+        box-shadow: 0 0 3px;
+        :first-child{
+            border-top: 1px solid 80808061;
+        }
+    }
+    &__sug-item{
+        padding: 0.7rem;
+        border-bottom: 1px solid #80808061;
+        width: 14rem;
+    }
 }

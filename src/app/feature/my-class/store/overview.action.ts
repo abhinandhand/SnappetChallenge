@@ -13,3 +13,9 @@ export const overviewFetched = createAction(
     '[Fetch Overview Effects] Overview is loaded',
     props<{overView: Overview[]}>()
 );
+
+export const overviewError = createAction(
+    '[Error: Fetch Overview] Connection Error',
+    props<{error: any}>()
+);
+
