@@ -12,6 +12,7 @@ export class PlotGraphService {
   topPerformers: any = {};
   diffiCultExcerciseRaw: any = {};
   sortedTopDifficultExc: any = { exc: [], values: [] };
+  stdCompletingDiffExcercise: any = {};
   colors: any = [{
     backgroundColor:
       ['rgba(255,0,0,0.3)', 'rgba(0,255,0,0.3)', 'rgba(0,0,255,0.3)', 'orange', 'yellow']
@@ -26,6 +27,7 @@ export class PlotGraphService {
       if (data.SubmitDateTime.split('T')[0] === dateFilter[0]) {
         this.topPerformersOfDay(data);
         this.getDifficultExcercise(data);
+        this.getStdDoingDifficultSubject(data);
         topSubjects[data.Subject] = topSubjects[data.Subject] ? topSubjects[data.Subject] + 1 : 1;
         topDomain[data.Domain] = topDomain[data.Domain] ? topDomain[data.Domain] + 1 : 1;
         topObjective[data.LearningObjective] = topObjective[data.LearningObjective] ? topObjective[data.LearningObjective] + 1 : 1;
@@ -39,16 +41,18 @@ export class PlotGraphService {
     return { objective: objectivePieChart,
       subject: subjectPieChart,
       domain: domainPieChart,
-      performers: this.createBarChartModel(),
+      performers: this.createBarChartModel(this.topPerformers),
+      stdCompletingDiffExc: this.createBarChartModel(this.stdCompletingDiffExcercise),
       exc: excercisePieChart};
   }
 
-  createBarChartModel(): BarChartModel {
+
+  createBarChartModel(data): BarChartModel {
     return {
       barChartType: 'bar',
-      barChartLabels: Object.keys(this.topPerformers),
+      barChartLabels:  Object.keys(data),
       barChartLegend: true,
-      barChartData: Object.values(this.topPerformers)
+      barChartData: Object.values(data)
     };
   }
 
@@ -102,7 +106,7 @@ export class PlotGraphService {
   }
 
   getDifficultExcercise(data: Overview): void {
-    if (data.Progress < 0) {
+    if (data.Progress <= 0) {
       this.diffiCultExcerciseRaw[data.ExerciseId] = this.diffiCultExcerciseRaw[data.ExerciseId] ?
         this.diffiCultExcerciseRaw[data.ExerciseId] + 1 : 1;
     }
@@ -115,7 +119,13 @@ export class PlotGraphService {
         this.sortedTopDifficultExc.values .push(item[1]);
       }
     );
+  }
 
+  getStdDoingDifficultSubject(data: Overview): void {
+    if (parseInt(data.Difficulty) > 350 && data.Correct >= 1) {
+      this.stdCompletingDiffExcercise[data.UserId] = this.stdCompletingDiffExcercise[data.UserId] ?
+      this.stdCompletingDiffExcercise[data.UserId] + 1 : 1;
+    }
   }
 }
 

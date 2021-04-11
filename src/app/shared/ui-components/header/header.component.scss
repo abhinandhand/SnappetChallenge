@@ -19,15 +19,25 @@
         top: 0;
         left: 0;
         right: 0;
+
+        @include respond(phone) {
+            justify-content: center;
+        }
     }
 
     &__items-left, &__items-right{
         flex: 1;
+        @include respond(mobile){
+            display: none;
+        }
     }
 
     &__items-brand{
         flex: 0 0 20rem;
         text-align: center;
+        @include respond(mobile){
+            flex: 1;
+        }
     }
 
     &__logo-box{

@@ -1,3 +1,5 @@
+@import '../../../../styles/abstracts/config';
+
 .search{
     &__input {
         height: 2.2rem;
@@ -14,6 +16,11 @@
         background-color: #fff;
         color: black;
         box-shadow: 0 0 3px;
+
+        @include respond(tab-land){
+            margin-left: 5.6rem;
+        }
+
         :first-child{
             border-top: 1px solid 80808061;
         }

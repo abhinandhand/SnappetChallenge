@@ -18,8 +18,8 @@ import { OverviewResolver } from './store/overview.resolver';
   imports: [
     CommonModule,
     MyClassRoutingModule,
-    ChartsModule,
     SharedModule,
+    ChartsModule,
     StoreModule.forFeature(fromClassOverview.OverviewFeatureKey, fromClassOverview.OverviewReducer),
     EffectsModule.forFeature([OverviewEffects])
   ],
