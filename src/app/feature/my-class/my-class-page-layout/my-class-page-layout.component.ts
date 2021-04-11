@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import { Overview } from 'src/app/core/model/overview';
-import { PieChartModel } from 'src/app/core/model/piechart';
 import { PlotGraphService } from 'src/app/core/services/plotgraph/plot-graph.service';
 import { AppState } from 'src/app/store/reducer';
 import { selectAllOverview } from '../store/overview.selectors';
@@ -13,11 +12,12 @@ import { selectAllOverview } from '../store/overview.selectors';
   styleUrls: ['./my-class-page-layout.component.scss']
 })
 export class MyClassPageLayoutComponent implements OnInit {
-
+  networkError = false;
   chartGraphsData!: any;
   overviewRawData!: Overview[];
 
-  constructor(private store: Store<AppState>, private plotGraphService: PlotGraphService) { }
+  constructor(private store: Store<AppState>, private plotGraphService: PlotGraphService,
+              private actions$: Actions) { }
 
   ngOnInit(): void {
     this.store.pipe(
@@ -26,6 +26,10 @@ export class MyClassPageLayoutComponent implements OnInit {
       this.overviewRawData = data;
       this.chartGraphsData = this.plotGraphService.plotChartData(this.overviewRawData, ['2015-03-24']);
     });
+
+    this.actions$.pipe(
+      ofType('[Error: Fetch Overview] Connection Error'),
+    ).subscribe(() => this.networkError = true);
   }
 
   latestDropDownValue(value: string): void{

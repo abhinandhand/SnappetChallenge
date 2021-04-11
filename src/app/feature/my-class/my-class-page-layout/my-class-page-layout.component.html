@@ -1,5 +1,14 @@
 <div class="myclass">
-    <h1>What's my class is working on ?</h1>
+    <div *ngIf="networkError" class="myclass__error-box">
+        <div class="myclass__error-msg">
+            <div class="__error-img">
+                <img src="../../../../assets/svg/error.svg" alt="">
+            </div>
+            <h1>Network Error Occured</h1>
+        </div>
+    </div>
+    <div *ngIf="!networkError">
+        <h1>What's my class is working on ?</h1>
     <div class="myclass__select-filter">
         <app-drop-down (dropDownOutput)="latestDropDownValue($event)"></app-drop-down>
     </div>
@@ -56,5 +65,6 @@
             </canvas>
 
         </div>
+    </div>
     </div>
 </div>
