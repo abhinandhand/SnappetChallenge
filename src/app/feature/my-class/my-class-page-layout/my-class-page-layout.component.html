@@ -1,1 +1,60 @@
-<p>my-class-page-layout works!</p>
+<div class="myclass">
+    <h1>What's my class is working on ?</h1>
+    <div class="myclass__select-filter">
+        <app-drop-down (dropDownOutput)="latestDropDownValue($event)"></app-drop-down>
+    </div>
+
+    <div class="myclass__container">
+        <div class="myclass__container-items myclass__item1">
+            <h2 class="myclass__graph-title">Learning Objectives</h2>
+            <canvas baseChart [data]="chartGraphsData.objective.pieChartData"
+                [labels]="chartGraphsData.objective.pieChartLabels" [chartType]="chartGraphsData.objective.pieChartType"
+                [colors]="chartGraphsData.objective.pieChartColors" [legend]="chartGraphsData.objective.pieChartLegend"
+                [options]="chartGraphsData.objective.pieChartOptions">
+            </canvas>
+        </div>
+
+        <div class="myclass__container-items">
+            <h2 class="myclass__graph-title">Subject</h2>
+            <canvas baseChart [data]="chartGraphsData.subject.pieChartData"
+                [labels]="chartGraphsData.subject.pieChartLabels" [chartType]="chartGraphsData.subject.pieChartType"
+                [colors]="chartGraphsData.subject.pieChartColors" [legend]="chartGraphsData.subject.pieChartLegend"
+                [options]="chartGraphsData.subject.pieChartOptions">
+            </canvas>
+
+        </div>
+
+
+        <div class="myclass__container-items">
+            <h2 class="myclass__graph-title">Domain</h2>
+            <canvas baseChart [data]="chartGraphsData.domain.pieChartData"
+                [labels]="chartGraphsData.domain.pieChartLabels" [chartType]="chartGraphsData.domain.pieChartType"
+                [colors]="chartGraphsData.domain.pieChartColors" [legend]="chartGraphsData.domain.pieChartLegend"
+                [options]="chartGraphsData.domain.pieChartOptions">
+            </canvas>
+
+        </div>
+    </div>
+    <div class="myclass__container">
+        <div class="myclass__container-items">
+            <h2 class="myclass__graph-title">Top Performers</h2>
+            <canvas baseChart [data]="chartGraphsData.performers.barChartData"
+                [labels]="chartGraphsData.performers.barChartLabels"
+                [chartType]="chartGraphsData.performers.barChartType"
+                [colors]="chartGraphsData.performers.barChartColors"
+                [legend]="chartGraphsData.performers.barChartLegend">
+            </canvas>
+
+        </div>
+    </div>
+    <div class="myclass__container">
+        <div class="myclass__container-items">
+            <h2 class="myclass__graph-title">Excercise students finding most difficult</h2>
+            <canvas baseChart [data]="chartGraphsData.exc.pieChartData" [labels]="chartGraphsData.exc.pieChartLabels"
+                [chartType]="chartGraphsData.exc.pieChartType" [colors]="chartGraphsData.exc.pieChartColors"
+                [legend]="chartGraphsData.exc.pieChartLegend" [options]="chartGraphsData.exc.pieChartOptions">
+            </canvas>
+
+        </div>
+    </div>
+</div>

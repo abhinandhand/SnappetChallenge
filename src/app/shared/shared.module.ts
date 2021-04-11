@@ -30,7 +30,8 @@ import { RouterModule } from '@angular/router';
   exports: [
     HeaderComponent,
     TextFieldComponent,
-    SideNavComponent
+    SideNavComponent,
+    DropDownComponent
   ]
 })
 export class SharedModule { }
