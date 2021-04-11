@@ -5,17 +5,14 @@
   }
 
   &__content-sidenav{
+    position: fixed;
     z-index: 20;
   }
   &__content-outlet{
+    margin-left: 3.75rem;;
     z-index: 10;
+    padding: 1rem;
   }
 }
 
-svg#clouds {
-    position: fixed;
-    bottom: -160px;
-    left: -230px;
-    z-index: -10;
-    width: 1920px;
-  }
+

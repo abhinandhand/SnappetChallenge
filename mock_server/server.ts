@@ -41,7 +41,7 @@ function returnSuggestions() {
 }
 
 function returnRawData() {
-  const dbRaw = fs.readFileSync('./mock_server/data/rawdata.json');
+  const dbRaw = fs.readFileSync('./mock_server/data/rawdataset.json');
   const rawData = JSON.parse(dbRaw);
   return rawData;
 }

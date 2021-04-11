@@ -1,1 +1,5 @@
-<p>drop-down works!</p>
+<div class="dropdown">
+    <select class="dropdown__select" (change)="updateValue($event)">
+        <option value="{{item.value}}" *ngFor="let item of dropDownOptions">{{item.label}}</option>
+    </select>
+</div>
