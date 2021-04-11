@@ -12,6 +12,7 @@ import { MyClassModule } from './feature/my-class/my-class.module';
 import { EffectsModule } from '@ngrx/effects';
 import { ChartsModule } from 'ng2-charts';
 import { reducers } from './store/reducer';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { reducers } from './store/reducer';
     SharedModule,
     MyClassModule,
     CoreModule,
+    CommonModule,
     ChartsModule,
     StoreModule.forRoot(reducers, {}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),

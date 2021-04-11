@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { fromEvent, Observable, of } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
+import { fromEvent, Observable, of, timer } from 'rxjs';
+import { catchError, debounceTime, delayWhen, distinctUntilChanged, map, retryWhen, switchMap, tap } from 'rxjs/operators';
 import { Suggestion } from 'src/app/core/model/suggestion';
 import { AutoSuggestionService } from 'src/app/core/services/autosuggestion/auto-suggestion.service';
 
