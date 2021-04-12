@@ -29,6 +29,7 @@ export class PlotGraphService {
   constructor() { }
 
   plotChartData(rawData: Overview[], dateFilter: string[]): Observable<GraphData>{
+    this.initialiseVariables();
     rawData.forEach((data: Overview) => {
       if (data.SubmitDateTime.split('T')[0] === dateFilter[0]) {
         this.createDifferentGraph(data);
@@ -55,6 +56,15 @@ export class PlotGraphService {
     this.topDomain[data.Domain] = this.topDomain[data.Domain] ? this.topDomain[data.Domain] + 1 : 1;
     this.topObjective[data.LearningObjective] = this.topObjective[data.LearningObjective] ? 
     this.topObjective[data.LearningObjective] + 1 : 1;
+  }
+
+  initialiseVariables(): void {
+    this. topSubjects = {};
+    this.topDomain = {};
+    this.topObjective = {};
+    this.topPerformers = {};
+    this.diffiCultExcerciseRaw = {};
+    this.stdCompletingDiffExcercise = {};
   }
 
 

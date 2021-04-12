@@ -8,5 +8,11 @@ export const selectAllOverview = createSelector(
     fromOverview.selectAll
 );
 
+export const isRawDataLoaded = createSelector(
+    selectOverviewState,
+    state => state.allOverviewDataLoaded
+);
+
+
 
 
