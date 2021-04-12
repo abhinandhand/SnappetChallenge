@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { filter, tap } from 'rxjs/operators';
+import { GraphData } from 'src/app/core/model/graphdata';
 import { Overview } from 'src/app/core/model/overview';
 import { PlotGraphService } from 'src/app/core/services/plotgraph/plot-graph.service';
 import { AppState } from 'src/app/store/reducer';
@@ -12,23 +15,23 @@ import { selectAllOverview } from '../../my-class/store/overview.selectors';
 })
 export class PerformancePageLayoutComponent implements OnInit {
 
-  chartGraphsData!: any;
-  overviewRawData!: Overview[];
+  chartGraphsData$: Observable<GraphData>;
+  overviewRawData!: any;
 
   constructor(private store: Store<AppState>,
               private plotGraphService: PlotGraphService) { }
 
   ngOnInit(): void {
+    this.chartGraphsData$ = this.plotGraphService.graphData$;
     this.store.pipe(
-      select(selectAllOverview)
-    ).subscribe(data => {
-      this.overviewRawData = data;
-      this.chartGraphsData = this.plotGraphService.plotChartData(this.overviewRawData, ['2015-03-24']);
-    });
+      select(selectAllOverview),
+      filter(data => Object.keys(data).length > 0),
+      tap(data => this.overviewRawData = data)
+    ).subscribe();
   }
 
   latestDropDownValue(value: string): void{
-    this.chartGraphsData = this.plotGraphService.plotChartData(this.overviewRawData, [value]);
+    this.plotGraphService.plotChartData(this.overviewRawData, [value]);
   }
 
 }

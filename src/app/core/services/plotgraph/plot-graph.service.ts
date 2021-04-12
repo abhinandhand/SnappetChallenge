@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import * as Chart from 'chart.js';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
+import { Observable, ReplaySubject } from 'rxjs';
 import { BarChartModel } from '../../model/barchart';
+import { GraphData } from '../../model/graphdata';
 import { Overview } from '../../model/overview';
 import { PieChartModel } from '../../model/piechart';
 
@@ -9,50 +11,60 @@ import { PieChartModel } from '../../model/piechart';
   providedIn: 'root'
 })
 export class PlotGraphService {
+
+  graphDataSubject = new ReplaySubject<GraphData>();
+  graphData$ = this.graphDataSubject.asObservable();
+
+  topSubjects: any = {};
+  topDomain: any = {};
+  topObjective: any = {};
   topPerformers: any = {};
   diffiCultExcerciseRaw: any = {};
-  sortedTopDifficultExc: any = { exc: [], values: [] };
   stdCompletingDiffExcercise: any = {};
-  colors: any = [{
-    backgroundColor:
-      ['rgba(255,0,0,0.3)', 'rgba(0,255,0,0.3)', 'rgba(0,0,255,0.3)', 'orange', 'yellow']
+  colors = [{ backgroundColor:
+      ['rgba(255,0,0,0.3)', 'rgba(0,255,0,0.3)', 'rgba(0,0,255,0.3)',
+      'orange', 'yellow', 'pink', 'red', 'green', 'white']
   }];
+
   constructor() { }
 
-  plotChartData(rawData: Overview[], dateFilter: string[]): any {
-    const topSubjects: any = {};
-    const topDomain: any = {};
-    const topObjective: any = {};
+  plotChartData(rawData: Overview[], dateFilter: string[]): Observable<GraphData>{
     rawData.forEach((data: Overview) => {
       if (data.SubmitDateTime.split('T')[0] === dateFilter[0]) {
-        this.topPerformersOfDay(data);
-        this.getDifficultExcercise(data);
-        this.getStdDoingDifficultSubject(data);
-        topSubjects[data.Subject] = topSubjects[data.Subject] ? topSubjects[data.Subject] + 1 : 1;
-        topDomain[data.Domain] = topDomain[data.Domain] ? topDomain[data.Domain] + 1 : 1;
-        topObjective[data.LearningObjective] = topObjective[data.LearningObjective] ? topObjective[data.LearningObjective] + 1 : 1;
+        this.createDifferentGraph(data);
       }
     });
-    this.getsortMostDifficultExcercise();
-    const subjectPieChart = this.createPieChartModel(topSubjects);
-    const domainPieChart = this.createPieChartModel(topDomain);
-    const objectivePieChart = this.createPieChartModel(topObjective);
-    const excercisePieChart = this.createExcPieChartModel();
-    return { objective: objectivePieChart,
-      subject: subjectPieChart,
-      domain: domainPieChart,
-      performers: this.createBarChartModel(this.topPerformers),
-      stdCompletingDiffExc: this.createBarChartModel(this.stdCompletingDiffExcercise),
-      exc: excercisePieChart};
+    this.graphDataSubject.next({
+
+      objectiveChart: this.createPieChartModel(this.topObjective),
+      subjectChart: this.createPieChartModel(this.topSubjects),
+      domainChart: this.createPieChartModel(this.topDomain),
+      topPerformerChart: this.createBarChartModel(this.topPerformers, 'rgba(255,0,0,0.3)'),
+      studentsFinishingDiffExcChart: this.createBarChartModel(this.stdCompletingDiffExcercise, 'rgba(0,255,0,0.3)'),
+      diffcultExcerciseChart: this.createExcPieChartModel(this.getsortMostDifficultExcercise())
+
+    });
+    return this.graphData$;
+  }
+
+  createDifferentGraph(data: Overview): void {
+    this.topPerformersOfDay(data);
+    this.getDifficultExcercise(data);
+    this.getStdDoingDifficultSubject(data);
+    this.topSubjects[data.Subject] = this.topSubjects[data.Subject] ? this.topSubjects[data.Subject] + 1 : 1;
+    this.topDomain[data.Domain] = this.topDomain[data.Domain] ? this.topDomain[data.Domain] + 1 : 1;
+    this.topObjective[data.LearningObjective] = this.topObjective[data.LearningObjective] ? 
+    this.topObjective[data.LearningObjective] + 1 : 1;
   }
 
 
-  createBarChartModel(data): BarChartModel {
+  createBarChartModel(data, color): BarChartModel {
     return {
       barChartType: 'bar',
       barChartLabels:  Object.keys(data),
       barChartLegend: true,
-      barChartData: Object.values(data)
+      barChartData: Object.values(data),
+      barChartColors: [{backgroundColor: color}]
     };
   }
 
@@ -68,11 +80,11 @@ export class PlotGraphService {
     };
   }
 
-  createExcPieChartModel(): PieChartModel {
+  createExcPieChartModel(data): PieChartModel {
     return {
       pieChartType: 'pie',
-      pieChartData: this.sortedTopDifficultExc.values.slice(0, 7),
-      pieChartLabels: this.sortedTopDifficultExc.exc.slice(0, 7),
+      pieChartData: data.values.slice(0, 7),
+      pieChartLabels: data.exc.slice(0, 7),
       pieChartLegend: true,
       pieChartColors: this.colors,
       pieChartPlugins: pluginDataLabels,
@@ -112,13 +124,15 @@ export class PlotGraphService {
     }
   }
 
-  getsortMostDifficultExcercise(): void {
+  getsortMostDifficultExcercise(): any {
+    const sortedTopDifficultExc: any = {exc: [], values: []};
     Object.entries(this.diffiCultExcerciseRaw).sort((a: any, b: any) => b[1] - a[1]).forEach(
       item => {
-        this.sortedTopDifficultExc.exc.push(item[0]);
-        this.sortedTopDifficultExc.values .push(item[1]);
+        sortedTopDifficultExc.exc.push(item[0]);
+        sortedTopDifficultExc.values .push(item[1]);
       }
     );
+    return sortedTopDifficultExc;
   }
 
   getStdDoingDifficultSubject(data: Overview): void {
