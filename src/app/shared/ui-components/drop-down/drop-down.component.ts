@@ -19,7 +19,6 @@ export class DropDownComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.sendLatestValue(this.dropDownOptions[0].value);
   }
 
   updateValue(event: any): void{
