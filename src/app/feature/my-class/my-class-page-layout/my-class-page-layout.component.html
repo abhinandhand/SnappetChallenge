@@ -1,9 +1,12 @@
 <div class="myclass">
     <div >
         <h1>What's my class is working on ?</h1>
+        <!--Drop Down Component with Output Binding-->
     <div class="myclass__select-filter">
         <app-drop-down (dropDownOutput)="latestDropDownValue($event)"></app-drop-down>
     </div>
+
+    <!--Subscribe to chartGraphsData stream & display the Graph Container on conditional -->
     <div *ngIf="chartGraphsData$ | async as graphData">
         <div class="myclass__container">
             <div class="myclass__container-items myclass__item1">

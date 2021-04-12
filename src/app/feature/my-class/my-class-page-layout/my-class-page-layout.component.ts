@@ -14,13 +14,23 @@ import { selectAllOverview } from '../store/overview.selectors';
   styleUrls: ['./my-class-page-layout.component.scss']
 })
 export class MyClassPageLayoutComponent implements OnInit {
+
+  /* This observable has the GraphData which is subscribed in the template for dispalying graph*/
   chartGraphsData$: Observable<GraphData>;
-  overviewRawData!: any;
+
+  /* Conatins the raw Data retreived from the selector - selectAllOverview*/
+  overviewRawData: any;
 
   constructor(private store: Store<AppState>, private plotGraphService: PlotGraphService) { }
 
   ngOnInit(): void {
+    /* Observable assigned to listen the Replay Subject*/
     this.chartGraphsData$ = this.plotGraphService.graphData$;
+
+    /* Subscribe to the NgRx Store
+    ` - for retreving the raw Data from the Selector and assign to overviewRawData
+      - Invoke the plotGraphService which has all the business logic to populate the different charts in dashboard
+    */
     this.store.pipe(
       select(selectAllOverview),
       filter(data => Object.keys(data).length > 0),
@@ -29,6 +39,7 @@ export class MyClassPageLayoutComponent implements OnInit {
     ).subscribe();
   }
 
+  /* Listen to the child component event on change of date dropdown*/
   latestDropDownValue(value: string): void{
     this.plotGraphService.plotChartData(this.overviewRawData, [value]);
   }

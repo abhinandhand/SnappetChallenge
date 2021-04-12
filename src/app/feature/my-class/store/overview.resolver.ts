@@ -15,9 +15,12 @@ export class OverviewResolver implements Resolve<any>{
 
     constructor(private store: Store<AppState>){}
 
+    /*
+        - Class Overview raw Data is loaded during the router resolving state, which is well before the rendering of the
+      My Class Page component. And the resloved data is saved in the store
+        - Dispatches the fetchOverview Action which inturns listened by the NgRx Side Effects
+     */
     resolve(): Observable<any> {
-        /*Class Overview raw Data is loaded during the router resolving state, which is well before the rendering of the
-        My Class Page component. And the resloved data is saved in the store */
         return this.store.pipe(
             select(isRawDataLoaded),
             tap(isDataLoaded => {

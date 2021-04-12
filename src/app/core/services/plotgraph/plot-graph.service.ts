@@ -7,11 +7,16 @@ import { GraphData } from '../../model/graphdata';
 import { Overview } from '../../model/overview';
 import { PieChartModel } from '../../model/piechart';
 
+/*  PlotGraphService 
+  - which has all the business logic to populate the different charts in dashboard */
 @Injectable({
   providedIn: 'root'
 })
 export class PlotGraphService {
 
+  /* Using Replay subject for the late subscribers who needs the display the charts
+    - avoids complex for loop operations for new subscribers
+  */
   graphDataSubject = new ReplaySubject<GraphData>();
   graphData$ = this.graphDataSubject.asObservable();
 
@@ -28,6 +33,8 @@ export class PlotGraphService {
 
   constructor() { }
 
+  /* public API of the service which is invoked from the component
+    - calls necessary functions to create the different chart data */
   plotChartData(rawData: Overview[], dateFilter: string[]): Observable<GraphData>{
     this.initialiseVariables();
     rawData.forEach((data: Overview) => {

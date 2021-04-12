@@ -6,8 +6,12 @@ import { catchError, concatMap, map } from 'rxjs/operators';
 import { ClassOverviewService } from 'src/app/core/services/class-overview/class-overview.service';
 import { OverviewAction } from './overview.actiontype';
 
-/* This class listens to the Fetch Overview Action & loads the data &
-     dispatch the action to save the data to store*/
+/* This is a NgRX SideEffect. 
+    - which listens to the Fetch Overview Action & loads the data from backend 
+    - and dispatche's the new action [OverviewAction.overviewFetched] whichs save the data to store
+    - Incase of Error - route's to Error Page
+                      - return custom Error Observable with default Error message & object
+*/
 @Injectable()
 export class OverviewEffects {
 

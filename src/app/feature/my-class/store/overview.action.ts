@@ -7,13 +7,14 @@ export const fetchOverview = createAction(
 '[Overview Resolver] Fetch Class Overview'
 );
 
-/* Effects is going to call the backend, in response the effect will also dispatch this overviewFetched
+/* This action is called, when Effect is going to call the backend, in response the effect will also dispatch this overviewFetched
     Action in order to save the result in the store */
 export const overviewFetched = createAction(
     '[Fetch Overview Effects] Overview is loaded',
     props<{overView: Overview[]}>()
 );
 
+/* This action is dispatched in case of error during the API request - logic need to be added */
 export const overviewError = createAction(
     '[Error: Fetch Overview] Connection Error',
     props<{error: any}>()
