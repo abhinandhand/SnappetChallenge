@@ -1,6 +1,20 @@
 @import '../../../../styles/abstracts/config';
 
 .search{
+    &__search-container{
+        position: absolute;
+        top: 0.8rem;
+        left: 8rem;
+
+        @include respond(tab-port){
+            left: 4rem;
+        }
+
+        @include respond(tab-land) {
+            left: 4rem;
+        }
+    }
+
     &__input {
         height: 2.2rem;
         border: 0;
@@ -12,14 +26,10 @@
     &__suggestion-box {
         text-align: left;
         position: absolute;
-        margin-left: 11.6%;
         background-color: #fff;
         color: black;
         box-shadow: 0 0 3px;
 
-        @include respond(tab-land){
-            margin-left: 5.6rem;
-        }
 
         :first-child{
             border-top: 1px solid 80808061;
