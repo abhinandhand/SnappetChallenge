@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MyClassPageLayoutComponent } from './feature/my-class/my-class-page-layout/my-class-page-layout.component';
+import { ErrorPageComponent } from './shared/ui-components/error-page/error-page.component';
 
 const routes: Routes = [
-  {path: 'class-performance', loadChildren: () => import('./feature/performance/performance.module').then(m => m.PerformanceModule)}
+  {path: 'class-performance', loadChildren: () => import('./feature/performance/performance.module').then(m => m.PerformanceModule)},
+  {path: 'error-page', component: ErrorPageComponent}
 ];
 
 @NgModule({

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, concatMap, map } from 'rxjs/operators';
@@ -16,9 +17,12 @@ export class OverviewEffects {
         map( overView => {
             return OverviewAction.overviewFetched({overView});
         }),
-        catchError(err => of(OverviewAction.overviewError({error: ['Error occured', {error: err}]})))
-    )
-    );
+        catchError(err => {
+            this.router.navigateByUrl('/error-page');
+            return of(OverviewAction.overviewError({error: ['Error occured', {error: err}]}));
+        })));
 
-    constructor(private action$: Actions, private httpService: ClassOverviewService){}
+
+    constructor(private action$: Actions, private httpService: ClassOverviewService,
+                private router: Router){}
 }

@@ -12,7 +12,3 @@ export const isRawDataLoaded = createSelector(
     selectOverviewState,
     state => state.allOverviewDataLoaded
 );
-
-
-
-

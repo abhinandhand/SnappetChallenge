@@ -14,12 +14,10 @@ import { selectAllOverview } from '../store/overview.selectors';
   styleUrls: ['./my-class-page-layout.component.scss']
 })
 export class MyClassPageLayoutComponent implements OnInit {
-  networkError = false;
   chartGraphsData$: Observable<GraphData>;
   overviewRawData!: any;
 
-  constructor(private store: Store<AppState>, private plotGraphService: PlotGraphService,
-              private actions$: Actions) { }
+  constructor(private store: Store<AppState>, private plotGraphService: PlotGraphService) { }
 
   ngOnInit(): void {
     this.chartGraphsData$ = this.plotGraphService.graphData$;
@@ -29,10 +27,6 @@ export class MyClassPageLayoutComponent implements OnInit {
       tap(data => this.overviewRawData = data),
       map(data => this.plotGraphService.plotChartData(data, ['2015-03-24']))
     ).subscribe();
-
-    this.actions$.pipe(
-      ofType('[Error: Fetch Overview] Connection Error'),
-    ).subscribe(() => this.networkError = true);
   }
 
   latestDropDownValue(value: string): void{
