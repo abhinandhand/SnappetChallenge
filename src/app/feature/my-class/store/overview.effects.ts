@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, concatMap, map } from 'rxjs/operators';
 import { ClassOverviewService } from 'src/app/core/services/class-overview/class-overview.service';
 import { OverviewAction } from './overview.actiontype';
 
-/* This class listens to the Fetch Overview Action & loads the data &
-     dispatch the action to save the data to store*/
+/* This is a NgRX SideEffect. 
+    - which listens to the Fetch Overview Action & loads the data from backend 
+    - and dispatche's the new action [OverviewAction.overviewFetched] whichs save the data to store
+    - Incase of Error - route's to Error Page
+                      - return custom Error Observable with default Error message & object
+*/
 @Injectable()
 export class OverviewEffects {
 
@@ -16,9 +21,12 @@ export class OverviewEffects {
         map( overView => {
             return OverviewAction.overviewFetched({overView});
         }),
-        catchError(err => of(OverviewAction.overviewError({error: ['Error occured', {error: err}]})))
-    )
-    );
+        catchError(err => {
+            this.router.navigateByUrl('/error-page');
+            return of(OverviewAction.overviewError({error: ['Error occured', {error: err}]}));
+        })));
 
-    constructor(private action$: Actions, private httpService: ClassOverviewService){}
+
+    constructor(private action$: Actions, private httpService: ClassOverviewService,
+                private router: Router){}
 }

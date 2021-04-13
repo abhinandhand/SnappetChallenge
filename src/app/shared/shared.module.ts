@@ -9,6 +9,7 @@ import { NavBarComponent } from './ui-components/nav-bar/nav-bar.component';
 import { SideNavComponent } from './ui-components/side-nav/side-nav.component';
 import { HeaderComponent } from './ui-components/header/header.component';
 import { RouterModule } from '@angular/router';
+import { ErrorPageComponent } from './ui-components/error-page/error-page.component';
 
 
 
@@ -20,7 +21,8 @@ import { RouterModule } from '@angular/router';
     TextFieldComponent,
     NavBarComponent,
     SideNavComponent,
-    HeaderComponent
+    HeaderComponent,
+    ErrorPageComponent
   ],
   imports: [
     RouterModule,

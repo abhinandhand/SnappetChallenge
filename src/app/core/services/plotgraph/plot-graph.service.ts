@@ -7,11 +7,16 @@ import { GraphData } from '../../model/graphdata';
 import { Overview } from '../../model/overview';
 import { PieChartModel } from '../../model/piechart';
 
+/*  PlotGraphService 
+  - which has all the business logic to populate the different charts in dashboard */
 @Injectable({
   providedIn: 'root'
 })
 export class PlotGraphService {
 
+  /* Using Replay subject for the late subscribers who needs the display the charts
+    - avoids complex for loop operations for new subscribers
+  */
   graphDataSubject = new ReplaySubject<GraphData>();
   graphData$ = this.graphDataSubject.asObservable();
 
@@ -28,7 +33,10 @@ export class PlotGraphService {
 
   constructor() { }
 
+  /* public API of the service which is invoked from the component
+    - calls necessary functions to create the different chart data */
   plotChartData(rawData: Overview[], dateFilter: string[]): Observable<GraphData>{
+    this.initialiseVariables();
     rawData.forEach((data: Overview) => {
       if (data.SubmitDateTime.split('T')[0] === dateFilter[0]) {
         this.createDifferentGraph(data);
@@ -36,9 +44,9 @@ export class PlotGraphService {
     });
     this.graphDataSubject.next({
 
-      objectiveChart: this.createPieChartModel(this.topObjective),
-      subjectChart: this.createPieChartModel(this.topSubjects),
-      domainChart: this.createPieChartModel(this.topDomain),
+      objectiveChart: this.createPieChartModel(this.topObjective, false),
+      subjectChart: this.createPieChartModel(this.topSubjects, true),
+      domainChart: this.createPieChartModel(this.topDomain, true),
       topPerformerChart: this.createBarChartModel(this.topPerformers, 'rgba(255,0,0,0.3)'),
       studentsFinishingDiffExcChart: this.createBarChartModel(this.stdCompletingDiffExcercise, 'rgba(0,255,0,0.3)'),
       diffcultExcerciseChart: this.createExcPieChartModel(this.getsortMostDifficultExcercise())
@@ -57,6 +65,15 @@ export class PlotGraphService {
     this.topObjective[data.LearningObjective] + 1 : 1;
   }
 
+  initialiseVariables(): void {
+    this. topSubjects = {};
+    this.topDomain = {};
+    this.topObjective = {};
+    this.topPerformers = {};
+    this.diffiCultExcerciseRaw = {};
+    this.stdCompletingDiffExcercise = {};
+  }
+
 
   createBarChartModel(data, color): BarChartModel {
     return {
@@ -68,7 +85,7 @@ export class PlotGraphService {
     };
   }
 
-  createPieChartModel(object: any): PieChartModel {
+  createPieChartModel(object: any, showLabel: boolean): PieChartModel {
     return {
       pieChartType: 'pie',
       pieChartData: Object.values(object).slice(0, 5),
@@ -76,7 +93,7 @@ export class PlotGraphService {
       pieChartLegend: true,
       pieChartColors: this.colors,
       pieChartPlugins: pluginDataLabels,
-      pieChartOptions: this.getPieChartOptions()
+      pieChartOptions: this.getPieChartOptions(showLabel)
     };
   }
 
@@ -88,11 +105,11 @@ export class PlotGraphService {
       pieChartLegend: true,
       pieChartColors: this.colors,
       pieChartPlugins: pluginDataLabels,
-      pieChartOptions: this.getPieChartOptions()
+      pieChartOptions: this.getPieChartOptions(true)
     };
   }
 
-  getPieChartOptions(): any {
+  getPieChartOptions(showLabel: boolean): any {
     const pieChartOptions: Chart.ChartOptions = {
       responsive: true,
       legend: {
@@ -102,7 +119,7 @@ export class PlotGraphService {
         datalabels: {
           formatter: (value, ctx: any) => {
             const label = ctx.chart.data.labels[ctx.dataIndex];
-            return label;
+            return showLabel ? label : '';
           },
         },
       }

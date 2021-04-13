@@ -8,6 +8,11 @@
         min-height: 94vh;
         background-color: $color-grey-dark-3;
         color: $color-white;
+        transition: width 0.2s ease-out;
+        -webkit-transition: width 0.2s ease-out;
+        -moz-transition: width 0.2s ease-in;
+        -o-transition: width 0.2s ease-in;
+        transition: width 0.2s ease-in;
     }
 
 }

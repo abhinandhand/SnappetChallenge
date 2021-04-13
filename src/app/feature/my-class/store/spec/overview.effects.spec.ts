@@ -7,6 +7,7 @@ import { TestScheduler } from 'rxjs/testing';
 import { ClassOverviewService } from '../../../../core/services/class-overview/class-overview.service';
 import { OverviewEffects } from '../overview.effects';
 import { OverviewAction } from '../overview.actiontype';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('Overview Effects tests suit', () => {
     const initialState = {
@@ -39,6 +40,9 @@ describe('Overview Effects tests suit', () => {
     beforeEach(() => {
 
         TestBed.configureTestingModule({
+          imports: [
+            RouterTestingModule,
+          ],
             providers : [
                 OverviewEffects,
                 provideMockStore({initialState}),

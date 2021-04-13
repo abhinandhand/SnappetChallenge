@@ -25,7 +25,6 @@
         margin: 2rem;
     }
 
-
     &__item1{
         flex-basis: 100%;
     }
@@ -34,18 +33,4 @@
         margin: 2rem 0rem 1rem;
     }
 
-    &__error-box {
-       position: absolute;
-       top: 50%;
-       left: 50%;
-       transform: translate(-50%, -50%);
-    }
-    &__error-msg{
-        color: $color-secondary-dark;
-        text-align: center;
-    }
-
-    &__error-img{
-        width: 20rem;
-    }
 }

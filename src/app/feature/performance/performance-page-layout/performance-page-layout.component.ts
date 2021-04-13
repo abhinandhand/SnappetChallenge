@@ -3,7 +3,6 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 import { GraphData } from 'src/app/core/model/graphdata';
-import { Overview } from 'src/app/core/model/overview';
 import { PlotGraphService } from 'src/app/core/services/plotgraph/plot-graph.service';
 import { AppState } from 'src/app/store/reducer';
 import { selectAllOverview } from '../../my-class/store/overview.selectors';
@@ -23,6 +22,11 @@ export class PerformancePageLayoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.chartGraphsData$ = this.plotGraphService.graphData$;
+
+    /* Subscribe to the NgRx Store
+    ` - for retreving the raw Data from the Selector and assign to overviewRawData
+      - this data is only used for the new dates in the DropDown
+    */
     this.store.pipe(
       select(selectAllOverview),
       filter(data => Object.keys(data).length > 0),
