@@ -44,9 +44,9 @@ export class PlotGraphService {
     });
     this.graphDataSubject.next({
 
-      objectiveChart: this.createPieChartModel(this.topObjective),
-      subjectChart: this.createPieChartModel(this.topSubjects),
-      domainChart: this.createPieChartModel(this.topDomain),
+      objectiveChart: this.createPieChartModel(this.topObjective, false),
+      subjectChart: this.createPieChartModel(this.topSubjects, true),
+      domainChart: this.createPieChartModel(this.topDomain, true),
       topPerformerChart: this.createBarChartModel(this.topPerformers, 'rgba(255,0,0,0.3)'),
       studentsFinishingDiffExcChart: this.createBarChartModel(this.stdCompletingDiffExcercise, 'rgba(0,255,0,0.3)'),
       diffcultExcerciseChart: this.createExcPieChartModel(this.getsortMostDifficultExcercise())
@@ -85,7 +85,7 @@ export class PlotGraphService {
     };
   }
 
-  createPieChartModel(object: any): PieChartModel {
+  createPieChartModel(object: any, showLabel: boolean): PieChartModel {
     return {
       pieChartType: 'pie',
       pieChartData: Object.values(object).slice(0, 5),
@@ -93,7 +93,7 @@ export class PlotGraphService {
       pieChartLegend: true,
       pieChartColors: this.colors,
       pieChartPlugins: pluginDataLabels,
-      pieChartOptions: this.getPieChartOptions()
+      pieChartOptions: this.getPieChartOptions(showLabel)
     };
   }
 
@@ -105,11 +105,11 @@ export class PlotGraphService {
       pieChartLegend: true,
       pieChartColors: this.colors,
       pieChartPlugins: pluginDataLabels,
-      pieChartOptions: this.getPieChartOptions()
+      pieChartOptions: this.getPieChartOptions(true)
     };
   }
 
-  getPieChartOptions(): any {
+  getPieChartOptions(showLabel: boolean): any {
     const pieChartOptions: Chart.ChartOptions = {
       responsive: true,
       legend: {
@@ -119,7 +119,7 @@ export class PlotGraphService {
         datalabels: {
           formatter: (value, ctx: any) => {
             const label = ctx.chart.data.labels[ctx.dataIndex];
-            return label;
+            return showLabel ? label : '';
           },
         },
       }

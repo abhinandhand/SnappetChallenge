@@ -9,7 +9,7 @@ export class DropDownComponent implements OnInit {
 
   dropDownOptions = [
     {value: '2015-03-24', label: 'Today'},
-    {value: '2015-03-24', label: 'Yesterday'},
+    {value: '2015-03-23', label: 'Yesterday'},
     {value: '2015-03-20', label: 'Last 7 days'},
     {value: 'custom date', label: 'Custom Date'}
   ];
