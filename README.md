@@ -1,6 +1,6 @@
 # Frontend Challenge
 
-Goal of this project is to build the dashboard for the teacher's based on the work results of the students.
+Goal of this project is to build the dashboard for the teacher's, based on the work results of the students. I have made sure the application is scalable, maintainable and reusable.
 
 ## Project Demo 
 
@@ -164,13 +164,3 @@ Goal of this project is to build the dashboard for the teacher's based on the wo
    Autosuggestions: ```http://localhost:3000/suggestions?filter=term```
      
   
-
- 
-
-
-
-
-
-
-
-
